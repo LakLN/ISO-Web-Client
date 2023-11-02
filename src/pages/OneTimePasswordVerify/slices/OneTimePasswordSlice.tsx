@@ -17,7 +17,6 @@ export const sendVerify = createAsyncThunk(
   async ({ otp, email }: UserVerifySendParamsInterface, thunkAPI) => {
     try {
       const response = await AuthService.verifyOtp({ otp, email });
-
       // Full filled
       thunkAPI.fulfillWithValue(response.data);
     } catch (error: any) {

@@ -58,61 +58,6 @@ export const linksAll = [
       },
     ],
   },
-  {
-    title: "RECRUITER",
-    links: [
-      {
-        name: "Default",
-        icon: <HiOutlineChartPie />,
-        url: "recruiter/dashboard",
-      },
-      {
-        name: "Calender",
-        icon: <HiOutlineCalendarDays />,
-        url: "recruiter/calender",
-      },
-      {
-        name: "Interviewer",
-        icon: <MdOutlineManageAccounts />,
-        url: "recruiter/interviewers",
-      },
-      {
-        name: "Candidate",
-        icon: <HiOutlineUser />,
-        url: "recruiter/candidates",
-      },
-      {
-        name: "Job",
-        icon: <HiOutlineFolder />,
-        url: "recruiter/jobs",
-      },
-      {
-        name: "Event",
-        icon: <MdOutlineEventAvailable />,
-        url: "recruiter/events",
-      },
-    ],
-  },
-  {
-    title: "INTERVIEWER",
-    links: [
-      {
-        name: "Interview Recent",
-        icon: <HiOutlineClipboardDocumentList />,
-        url: "interviewer/interview-recent",
-      },
-      {
-        name: "Candidate Recent",
-        icon: <HiOutlineCalendarDays />,
-        url: "interviewer/candidate-recent",
-      },
-      {
-        name: "Interview Question",
-        icon: <HiOutlineClipboardDocument />,
-        url: "interviewer/question",
-      },
-    ],
-  },
 ];
 const ManagementAppLayOut = () => {
   const [leftActive, setLeftActive] = useState<boolean>(false);
@@ -124,11 +69,7 @@ const ManagementAppLayOut = () => {
   const { user } = useAppSelector((state: any) => state.Auth);
 
   let links = linksAll;
-  if (user?.role == "INTERVIEWER") {
-    links = [linksAll[2]];
-  } else if (user?.role == "RECRUITER") {
-    links = [linksAll[1]];
-  } else if (user?.role == "ADMIN") {
+  if (user?.role == "ADMIN") {
     links = [linksAll[0]];
   }
 

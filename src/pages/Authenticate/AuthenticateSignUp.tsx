@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import InputIcon from "../../components/InputIcon/InputIcon";
+import InputPasswordIcon from "../../components/InputPasswordIcon/InputPasswordIcon";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { authRegister } from "../../redux/AuthSlice";
@@ -19,114 +20,6 @@ import classNames from "classnames";
 function TermAndConditionsDialog({ visible, onClose, onOkay }: any) {
   return (
     <Transition appear show={visible} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  Term of services
-                </Dialog.Title>
-
-                <div className="max-h-[70vh] mt-2 overflow-y-auto">
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-                  <br />
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-                  <br />
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-
-                  <br />
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-
-                  <br />
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-
-                  <br />
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-
-                  <br />
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Laborum, omnis quas? Cumque deserunt, repudiandae
-                    repellendus reprehenderit quisquam dolorem excepturi
-                    voluptas consequatur impedit labore eaque necessitatibus
-                    facere ratione quo architecto molestiae.
-                  </p>
-                </div>
-
-                <div className="mt-4 flex flex-row-reverse">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-sm font-medium text-emerald-300 hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={onOkay}
-                  >
-                    Ok
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </div>
-      </Dialog>
     </Transition>
   );
 }
@@ -136,7 +29,6 @@ export default function AuthenticateSignUp() {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
   } = useForm();
   const dispatch = useAppDispatch();
   const { registerLoadingState } = useAppSelector((app) => app.Auth);
@@ -147,7 +39,6 @@ export default function AuthenticateSignUp() {
     dispatch(authRegister(data))
       .unwrap()
       .then(() => {
-        // toast.success(`Successfully register the`)
         navigate("/email/incomplete");
       })
       .catch((data) => {
@@ -166,21 +57,31 @@ export default function AuthenticateSignUp() {
     setVisibleTermAndCondition(true);
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); 
+  };
+
   return (
     <form
       className={classnames(
-        `py-8 gap-4 items-center justify-center flex flex-col h-[600px]`,
-        `bg-zinc-100 shadow-md`,
-        `rounded-xl px-4 md:px-5 lg:px-6`,
-      )}
+      `py-8 gap-4 items-center justify-center flex flex-col h-[70vh]`,
+      `bg-blue-100 shadow-md`,
+      `rounded-xl px-4 md:px-5 lg:px-6`,
+      ` mx-auto`,
+      "font-sans"
+    )}
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="mx-6 items-center flex flex-col gap-4 w-full">
-        <h1 className="text-xl font-semibold">Sign up</h1>
+        <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl mb-4">
+          Đăng ký tài khoản
+        </h3>
 
         <InputIcon
           icon={<UserIcon />}
-          placeholder="full name"
+          placeholder="Họ tên"
           register={register}
           label="fullName"
           required
@@ -191,7 +92,7 @@ export default function AuthenticateSignUp() {
 
         <InputIcon
           icon={<EnvelopeIcon />}
-          placeholder="email address"
+          placeholder="Email"
           register={register}
           label="email"
           type="email"
@@ -202,10 +103,10 @@ export default function AuthenticateSignUp() {
           })}
         />
 
-        <InputIcon
+        <InputPasswordIcon
           icon={<LockClosedIcon />}
-          placeholder="password"
-          type={`password`}
+          placeholder="Mật khẩu"
+          type={showPassword ? "text" : "password"}
           register={register}
           label="password"
           autoComplete="new-password"
@@ -213,12 +114,15 @@ export default function AuthenticateSignUp() {
           wrapperClassName={classnames({
             "border-red-300": errors && errors.password,
           })}
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
         />
+        
 
-        <InputIcon
+        <InputPasswordIcon
           icon={<LockClosedIcon />}
-          placeholder="confirmPassword"
-          type={`password`}
+          placeholder="Nhắc lại mật khẩu"
+          type={showPassword ? "text" : "password"}
           register={register}
           label="confirmPassword"
           autoComplete="new-password"
@@ -226,49 +130,15 @@ export default function AuthenticateSignUp() {
           wrapperClassName={classnames({
             "border-red-300": errors && errors.confirmPassword,
           })}
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
         />
-        {/* <input type="tel" /> */}
-        <InputIcon
-          icon={<PhoneIcon />}
-          register={register}
-          label="phone"
-          required
-          placeholder="phone number"
-          type="tel"
-          maxLength={12}
-          pattern="([0-9]{8,12})"
-          wrapperClassName={classnames({
-            "border-red-300": errors && errors.phone,
-          })}
-        />
-
-        {/* AgreeTerms */}
-        <div className="flex flex-row gap-4 w-full text-zinc-600">
-          <label>
-            <input
-              type="checkbox"
-              {...register("agreeTerms")}
-              required
-              className="mr-3"
-            />
-            I'm agree with the{" "}
-            <b
-              className={`cursor-pointer hover:underline`}
-              onClick={handleOpenTermOfServceDialog}
-            >
-              Term and conditions
-            </b>
-          </label>
-        </div>
-
         <PrimaryButton
           type={"submit"}
-          text="Sign up"
+          text="Đăng ký"
+          style={{marginTop: "10px"}}
           disabled={registerLoadingState === "pending"}
           isLoading={registerLoadingState === "pending"}
-          // className={classnames({
-          //   "bg-zinc-500 hover:bg-zinc-500": loading === "pending",
-          // })}
         />
       </div>
       <TermAndConditionsDialog
@@ -276,6 +146,12 @@ export default function AuthenticateSignUp() {
         onClose={handleCloseDialog}
         onOkay={handleCloseDialog}
       />
-    </form>
+      <p className="text-center text-base font-medium text-body-color">
+        Đã có tài khoản?{" "}
+        <Link to="/auth/login" className="text-blue-500 hover:underline ">
+          Đăng nhập
+        </Link>
+      </p>
+</form>
   );
 }

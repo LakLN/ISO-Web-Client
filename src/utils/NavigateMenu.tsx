@@ -8,12 +8,12 @@ import {
 } from "react-icons/hi2";
 
 export const prepareMenuItem = (data: any) => [
-  {
-    url: "/profile/",
-    icon: <HiUserCircle />,
-    text: "My Profile",
-  },
-  ...data,
+  // {
+  //   url: "/profile/",
+  //   icon: <HiUserCircle />,
+  //   text: "My Profile",
+  // },
+  // ...data,
   {
     url: "/logout",
     icon: <HiArrowLeftOnRectangle />,
@@ -50,10 +50,6 @@ const informationProvider = [
 
 export const prepareCandidateProvider = () => {
   return prepareMenuItem([...informationProvider, ...candidateProvider]);
-};
-
-export const prepareInterviewerProvider = () => {
-  return prepareMenuItem([...informationProvider]);
 };
 
 export const prepareOtherProvider = () => {

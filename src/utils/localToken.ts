@@ -12,10 +12,8 @@ export function getLocalToken(): string {
       throw new Error(`The token is not found`);
     }
     const parsedToken = JSON.parse(localStorageToken) as string;
-
     return parsedToken;
   } catch (err) {
-    // clearLocalToken();
     throw err;
   }
 }

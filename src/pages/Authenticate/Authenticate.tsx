@@ -18,6 +18,12 @@ export default function Authenticate() {
   /**
    * If the user is logged in
    */
+  const backgroundStyle = {
+    backgroundImage: 'url("/images/background.jpg")',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    minHeight: '100vh',
+  };
   useEffect(() => {
     if (isLoggedIn && token) {
       toast.info(
@@ -27,7 +33,6 @@ export default function Authenticate() {
   }, [isLoggedIn, token]);
 
   if (loading === "pending") {
-    // navigate(-1);
     return (
       <div
         className={classNames(
@@ -42,61 +47,21 @@ export default function Authenticate() {
   }
 
   if (isLoggedIn && token) {
-    // navigate(-1);
     return <div className="min-h-screen"></div>;
   }
 
   return (
     <div
       className={classnames(
-        "flex flex-col md:flex-row gap-12",
-        `min-h-[75vh] mb-36`,
+        "flex flex-col md:flex-row gap-12 items-center justify-center",
+        `min-h-[100vh] mb-16`,
       )}
+      style={backgroundStyle}
     >
       <div className="w-full md:w-1/2 lg:w-5/12 xl:w-4/12 ">
         <Outlet />
       </div>
-      {/* Browse Job Frame */}
-      <div
-        className={classnames(
-          `bg-[#176A4B] rounded-3xl px-6 py-4`,
-          `shadow-md`,
-          `relative flex-1 flex flex-col gap-6`,
-        )}
-      >
-        <h1
-          className={classnames(`text-white`, `font-bold text-3xl leading-10`)}
-        >
-          There are more than a thousand career opportunities for you
-        </h1>
-        <p
-          className={classnames(`text-[#89EFC9] text-[20px]`, `leading-tight`)}
-        >
-          We understand that you are expecting to have the best jobs. By joining
-          JobPort, you are going to whitelist onto the top recruiter company
-          around the world.
-        </p>
-
-        <div className="flex flex-row">
-          <button
-            className={classnames(`border`, `px-3 py-1 rounded-xl`)}
-            onClick={handleBrowseJobClick}
-          >
-            <div className="text-white ">Browse jobs</div>
-          </button>
-        </div>
-
-        <img
-          alt="Authenticate block decoration"
-          src={image}
-          className={classnames(
-            `right-0 opacity-100`,
-
-            `w-[200px]`,
-            `hidden sm:block sm:absolute bottom-[-240px] md:bottom-[-32px]`,
-          )}
-        />
-      </div>
     </div>
+
   );
 }

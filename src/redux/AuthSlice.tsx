@@ -16,7 +16,7 @@ import {
 import { toast } from "react-toastify";
 import axiosInstance from "../utils/AxiosInstance";
 
-type RoleType = "CANDIDATE" | "RECRUITER" | "ADMIN" | "INTERVIEWER";
+type RoleType = "USER" | "ADMIN";
 
 interface UserResponseState {
   userId: string;
@@ -59,52 +59,48 @@ export const authRegister = createAsyncThunk(
     {
       fullName,
       email,
-      phone,
       password,
       confirmPassword,
     }: UserRegisterParamsInterface,
     thunkAPI,
   ) => {
-    // thunkAPI.dispatch()
     try {
+      console.log("Before AuthService.register");
       const response = await AuthService.register({
         fullName,
         email,
-        phone,
         password,
         confirmPassword,
       });
+      console.log("After AuthService.register");
 
       if (response.status !== 200) {
+        console.log("Error response: ", response);
         throw new Error(
           `There are some error when register: ${response.statusText}`,
         );
       }
 
-      // const { result: token, message } = response.data;
-      // thunkAPI.dispatch(setToken(token));
-      // Fetch the user from token
-      // thunkAPI.dispatch(fetchUserFromToken({ token }));
-
-      // setLocalToken(token);
-
-      return response.data;
+      // Rest of the code
     } catch (err: any) {
-      console.log(err);
+      console.log("Error in authRegister: ", err);
       return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
 
+
 export const authLogin = createAsyncThunk(
   "Auth/login",
-  async ({ credentialId, password }: UserLoginParamsInterface, thunkAPI) => {
+  async ({ email, password }: UserLoginParamsInterface, thunkAPI) => {
     thunkAPI.dispatch(setSignedInLoadingState(`pending`));
     try {
-      const response = await AuthService.login({ credentialId, password });
-
+      console.log("Before AuthService.login");
+      const response = await AuthService.login({ email, password });
+      console.log("After AuthService.login", response);
       console.log(response);
       if (response.status !== 200) {
+        console.log("Error response: ", response);
         throw new Error(
           `There are some error when register: ${response.statusText}`,
         );
@@ -123,8 +119,6 @@ export const authLogin = createAsyncThunk(
 
       return response.data;
     } catch (err: any) {
-      // throw err;
-      // console.log(err.response.data);
       return thunkAPI.rejectWithValue(err.response.data);
     }
   },

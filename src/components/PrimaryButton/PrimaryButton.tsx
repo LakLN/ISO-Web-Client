@@ -18,13 +18,14 @@ export default function PrimaryButton({
   return (
     <button
       className={classnames(
-        `Button bg-emerald-600 hover:bg-emerald-800 disabled:bg-emerald-900 text-white`,
+        `Button bg-blue-600 hover:bg-blue-800 disabled:bg-blue-900 text-white`,
         `transition-colors ease-in-out duration-100`,
         `rounded-lg flex-row justify-center items-center inline-flex gap-4`,
-        "text-base px-4 py-2 w-full",
+        "text-base p-3 w-full",
         {
           "text-sm px-4 py-2": size === "sm",
         },
+        "font-bold",
         className,
       )}
       {...children}

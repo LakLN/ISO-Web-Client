@@ -5,7 +5,6 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks/hooks";
 import {
   prepareCandidateProvider,
-  prepareInterviewerProvider,
   prepareOtherProvider,
 } from "../../utils/NavigateMenu";
 
@@ -17,10 +16,8 @@ export default function UserProfileLayout() {
   useEffect(() => {
     if (loading === "success" && user) {
       const supplyMenuItems: any[] =
-        user.role === "CANDIDATE"
+        user.role === "USER"
           ? prepareCandidateProvider()
-          : user.role === "INTERVIEWER"
-          ? prepareInterviewerProvider()
           : prepareOtherProvider();
 
       setAsideMenuItems([...supplyMenuItems]);

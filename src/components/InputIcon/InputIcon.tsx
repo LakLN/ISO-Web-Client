@@ -27,7 +27,7 @@ export default function InputIcon<T extends FieldValues>({
         `flex flex-row items-center justify-center`,
         `bg-white text-zinc-500`,
         `rounded-md`,
-        `border w-full`,
+        `border w-full p-1`,
         wrapperClassName,
       )}
     >

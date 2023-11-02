@@ -115,8 +115,8 @@ export default function App() {
             <Route path="/email" element={<EmailConfirmationLayout />}>
               <Route path="incomplete" element={<IncompleteConfirmEmail />} />
               <Route path="complete" element={<CompleteConfirmEmail />} />
+              <Route path="verify" element={<OneTimePasswordVerify />} />
             </Route>
-            <Route path="otp" element={<OneTimePasswordVerify />} />
             <Route path="/forget-password" element={<ForgetPasswordLayout />}>
               <Route index element={<ForgetPassword />} />
               <Route path="confirm-password" element={<ConfirmPassword />} />

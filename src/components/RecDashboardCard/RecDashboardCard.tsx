@@ -8,16 +8,16 @@ interface MyComponentProps {
     jobId: number,
     Type: string,
     quantity: string,
-    percentage: string,
+    // percentage: string,
   },
   index: {
     index: number,
   }
 }
 
-const temp = data.listJobs.map((props)=>{
-  return props.percentage
-})
+// const temp = data.listJobs.map((props)=>{
+//   return props.percentage
+// })
 
 
 export default function Rec_DashboardCard({ job,index }: MyComponentProps) {
@@ -38,8 +38,8 @@ export default function Rec_DashboardCard({ job,index }: MyComponentProps) {
         <div className={classnames("mt-4 flex text-2xl justify-between font-semibold ")}>
           <p>{job.value}</p>
           <div className="flex">
-            <p className=" text-sm my-2 gap-2 inline-flex">+{temp}%</p>
-            <span className="flex justify-center items-center"><HiOutlineArrowTrendingUp /></span>
+            {/* <p className=" text-sm my-2 gap-2 inline-flex">+{temp}%</p> */}
+            {/* <span className="flex justify-center items-center"><HiOutlineArrowTrendingUp /></span> */}
           </div>
         </div>
       </button>
