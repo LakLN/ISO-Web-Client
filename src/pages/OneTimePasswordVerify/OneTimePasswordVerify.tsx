@@ -62,9 +62,7 @@ export default function OneTimePasswordVerify() {
       <Transition
         show={showing}
         className={classNames(
-          `px-10 py-8 rounded-[35px] w-full md:w-7/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12`,
-          `bg-[#176A4B]`,
-          `flex flex-col shadow-lg`,
+          `px-10 py-8 rounded-[35px] w-full mt-8 mb-8 bg-blue-200 shadow-lg`,
         )}
       >
         {/* Icons */}
@@ -77,7 +75,8 @@ export default function OneTimePasswordVerify() {
               enterTo="transform-gpu opacity-100 scale-100 rotate-0"
             >
               <AiOutlineLock
-                className={classNames(`text-[#87D3B7] w-1/2 text-9xl`)}
+                className={classNames(`w-1/2 text-9xl`)}
+                style={{ color: '#333333' }}
               />
             </Transition.Child>
           </Transition>
@@ -91,13 +90,9 @@ export default function OneTimePasswordVerify() {
           enterFrom="transform-gpu opacity-0 translate-y-12"
           enterTo="transform-gpu opacity-100 translate-y-0"
         >
-          <h3
-            className={classNames(
-              `text-[#87D3B7] text-xl font-light leading-tight my-4`,
-            )}
-          >
-            Please enter the One-Time-Password that we sent to your email.
-          </h3>
+          <h1 className="text-black text-3xl font-bold leading-10 my-4 text-center">
+            Hãy nhập mã OTP của bạn.
+          </h1>
         </Transition>
         <input type="hidden" {...register("email")} value={""} />
 

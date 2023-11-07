@@ -12,24 +12,29 @@ export default function OneTimePasswordInputArray({
   onFilled,
   onUnfilled,
 }: OneTimePasswordInputArrayProps) {
-  const [values, setValues] = useState<(number | undefined)[]>(
-    new Array(6).fill(undefined),
+  const [values, setValues] = useState<(number | null)[]>(
+    new Array(6).fill(null),
   );
   const [visible, setVisible] = useState<boolean[]>(new Array(6).fill(true));
 
   const handleOnChange = (fieldIndex: number, fieldValue: any) => {
     let _fieldValue = !Number.isNaN(fieldValue)
-      ? Number.parseInt(fieldValue)
-      : undefined;
+      ? Number.parseInt(fieldValue as string)
+      : null;
 
     let _replaceValues = [...values];
     _replaceValues[fieldIndex] = _fieldValue;
     setValues([..._replaceValues]);
-    // alert(fieldIndex + " " + fieldValue);
+
     if (fieldValue === "") {
-      // Skip the go next
-      return;
+      _replaceValues[fieldIndex] = null;
     }
+    if (fieldValue === null && fieldIndex > 0) {
+      _replaceValues[fieldIndex - 1] = null;
+    }
+
+    setValues(_replaceValues);
+    
     if (fieldValue !== null || fieldValue !== undefined) {
       setVisible([...visible].fill(true, fieldIndex + 1, fieldIndex + 2));
 
@@ -41,9 +46,20 @@ export default function OneTimePasswordInputArray({
           );
 
           if (nextFieldInput != null) {
-            // nextFieldInput.style.background = "red";
             nextFieldInput.focus({ preventScroll: true });
             (nextFieldInput as HTMLInputElement).select();
+          }
+        }, 2);
+      } else if (fieldIndex === 6) {
+        // Focus back to the last field (the same one) and blur to prevent further input
+        setTimeout(() => {
+          const lastFieldInput = document.getElementById(
+            `otp-input-${fieldIndex}`
+          );
+            
+          if (lastFieldInput != null) {
+            lastFieldInput.focus({ preventScroll: true });
+            lastFieldInput.blur();
           }
         }, 2);
       }
@@ -51,20 +67,20 @@ export default function OneTimePasswordInputArray({
   };
 
   const handleInvisibleCurrentChange = (e: any, fieldIndex: number) => {
-    if (e.code === "Backspace" && fieldIndex > 0) {
-      // setVisible([...visible].fill(false, fieldIndex, fieldIndex + 1));
-      // if (fieldIndex > 0) {
-      //   setTimeout(() => {
-      //     const previousFieldInput = document.getElementById(
-      //       `otp-input-${fieldIndex - 1}`,
-      //     );
-      //     if (previousFieldInput != null) {
-      //       // nextFieldInput.style.background = "red";
-      //       previousFieldInput.focus({ preventScroll: true });
-      //       (previousFieldInput as HTMLInputElement).select();
-      //     }
-      //   }, 2);
-      // }
+    if (e.code === "Backspace" && fieldIndex >= 0) {
+      let _replaceValues = [...values];
+    _replaceValues[fieldIndex] = null;
+    setValues([..._replaceValues]);
+      setTimeout(() => {
+        const previousFieldInput = document.getElementById(
+          `otp-input-${fieldIndex - 1}`,
+        );
+  
+        if (previousFieldInput != null) {
+          previousFieldInput.focus({ preventScroll: true });
+          (previousFieldInput as HTMLInputElement).select();
+        }
+      }, 0);
     }
 
     if (e.code === "ArrowLeft") {
@@ -123,27 +139,35 @@ export default function OneTimePasswordInputArray({
             enterFrom="transform-gpu translate-y-2 opacity-0"
             enterTo="transform-gpu translate-y-0 opacity-100"
             className={classNames(
-              `ml-1 sm:ml-4 w-6 rounded-md text-xl md:text-3xl text-center inline-block`,
-              `border bg-none outline-none`,
-
-              // `transform-gpu ease-in-out duration-400`,
-              `bg-emerald-600 text-emerald-900 selection:text-black focus:border-black`,
-              `border-emerald-700`,
+              `ml-1 sm:ml-4 w-10 rounded-md text-xl md:text-3xl text-center inline-block`,
+              `border bg-blue-500 text-blue-900 selection:text-black focus:border-black border-blue-600`,
               `delay-[calculate(${passwordIdx} * 75ms)]`,
               {
                 hidden: !visible[passwordIdx],
-              },
+              }
             )}
-            // placeholder={Number.parseInt(password[passwordIdx])}
+            
+            onFocus={({ target }) => {
+              target.select();
+              if (passwordIdx === values.length) {
+                target.blur();
+              }
+            }}
+            
             onChange={({ target }) => {
+              if (target.value.length > 1) {
+                target.value = target.value.slice(0, 1);
+              }
               handleOnChange(passwordIdx, target.value);
             }}
             key={`otp-input-${passwordIdx}`}
             id={`otp-input-${passwordIdx}`}
             onKeyDown={(e) => handleInvisibleCurrentChange(e, passwordIdx)}
-            type="number"
-            value={values[passwordIdx]}
-          ></Transition>
+            type="text"
+            maxLength={1}
+            value={values[passwordIdx]?.toString() || ''}
+          >
+          </Transition>
         );
       })}
     </div>

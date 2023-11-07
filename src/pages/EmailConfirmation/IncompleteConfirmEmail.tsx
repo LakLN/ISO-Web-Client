@@ -12,7 +12,9 @@ const IncompleteConfirmEmail = () => {
     toast.warning('Resend email logic not initialize.');
     // navigate('/email/complete');
   };
-
+  const handleReturnHome = () => {
+    navigate("/");
+  };
 
   return (
     <div
@@ -67,8 +69,11 @@ const IncompleteConfirmEmail = () => {
         enterFrom="opacity-0"
         enterTo="opacity-100"
       >
-        <div className="mt-8 flex flex-row-reverse">
+        {/* <div className="mt-8 flex flex-row-reverse">
           <PrimaryButton text="Gửi lại" onClick={handleResendEmail} />
+        </div> */}
+        <div className='mt-8 flex flex-row-reverse'>
+          <PrimaryButton text='Đến Trang chủ' onClick={handleReturnHome} />
         </div>
       </Transition>
     </div>

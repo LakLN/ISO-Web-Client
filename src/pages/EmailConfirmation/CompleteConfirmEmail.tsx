@@ -18,16 +18,14 @@ export default function CompleteConfirmEmail() {
     };
   }, []);
 
-  const handleSeekingJobs = () => {
-    navigate(`/`);
+  const handleLogin = () => {
+    navigate(`/auth/login`);
   };
   return (
     <Transition
       show={showing}
       className={classNames(
-        `px-10 py-8 rounded-[35px] w-full md:w-7/12 lg:w-5/12 xl:w-4/12 2xl:w-3/12`,
-        `bg-[#176A4B]`,
-        `flex flex-col shadow-lg`,
+        `px-10 py-8 rounded-[35px] w-full mt-8 mb-8 bg-blue-200 shadow-lg`,
       )}
     >
       {/* Icons */}
@@ -39,7 +37,7 @@ export default function CompleteConfirmEmail() {
             enterFrom="transform-gpu opacity-0  scale-50 rotate-180"
             enterTo="transform-gpu opacity-100 scale-100 rotate-0"
           >
-            <CheckCircleIcon className={classNames(`text-[#87D3B7] w-1/2`)} />
+            <CheckCircleIcon className={classNames(`text-[#333333] w-1/2`)} />
           </Transition.Child>
         </Transition>
       </div>
@@ -54,10 +52,10 @@ export default function CompleteConfirmEmail() {
       >
         <h1
           className={classNames(
-            `text-white text-3xl font-semibold leading-10 my-4`,
+            `text-black text-3xl font-semibold leading-10 my-4 text-center`,
           )}
         >
-          You are safety now, let's enjoy.
+          Xác thực thành công!
         </h1>
       </Transition>
 
@@ -70,7 +68,7 @@ export default function CompleteConfirmEmail() {
         enterTo="opacity-100"
       >
         <div className={classNames(`mt-8 flex flex-row-reverse`)}>
-          <PrimaryButton text="Seeking jobs" onClick={handleSeekingJobs} />
+          <PrimaryButton text="Đăng nhập ngay" onClick={handleLogin} />
         </div>
       </Transition>
     </Transition>
