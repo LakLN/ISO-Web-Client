@@ -12,6 +12,7 @@ import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import JobCard from "../../components/JobCard/JobCard";
 import BlogCard from "../../components/BlogCard/BlogCard";
 import Advertise from "../../components/Advertise/Advertise";
+import Carousel from "../../components/Carousel";
 import { Menu, Transition } from "@headlessui/react";
 import { useAppSelector } from "../../hooks/hooks";
 import {
@@ -53,8 +54,8 @@ export default function Home() {
         pathname: "/jobs",
         search: createSearchParams({
           ...queryConfig,
-          name: search, // Tên biến lưu từ khóa tìm kiếm trên trang Home
-          type: type, //
+          name: search, 
+          type: type, 
           index: "1",
         }).toString(),
       });
@@ -223,7 +224,7 @@ export default function Home() {
             left: 0,
             right: 0,
             bottom: 40,
-            zIndex: -1, // Đặt z-index thấp hơn để nó nằm dưới các phần tử khác
+            zIndex: -1, 
           }}>
           <svg
             width="364"
@@ -328,25 +329,32 @@ export default function Home() {
           </svg>
         </div>
       </section>
-      {/* Hero */}
-      <div className="container"  style={{ paddingTop: '75px', paddingBottom: '100px' }}>
+      <div className="container" style={{ paddingTop: '75px', paddingBottom: '100px' }}>
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div
-              className="wow fadeInUp mx-auto max-w-[800px] text-center"
-              data-wow-delay=".2s"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
-              <h1
-                className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
-                style={{ flex: "1" }}
-              >
-                CHƯƠNG TRÌNH ISO 17024 <br/>TRƯỜNG TRUNG CẤP NGUYỄN TẤT THÀNH
-              </h1>
+            <div className="wow fadeInUp mx-auto max-w-[800px] text-center" data-wow-delay=".2s">
+              <div className="flex flex-col items-center">
+                <h1
+                  className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  CHƯƠNG TRÌNH ISO 17024
+                </h1>
+                <h1
+                  className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  TRƯỜNG TRUNG CẤP NGUYỄN TẤT THÀNH
+                </h1>
+              </div>
             </div>
           </div>
         </div>
-     </div>
+      </div>
+
+      {/* Carousel  */}
+      <Carousel />
+
       {/* SEARCH  */}
       <form
         className={classnames(
